@@ -1,4 +1,4 @@
-package com.company.neophite.view;
+package com.company.lab3.view;
 
 import java.util.Scanner;
 

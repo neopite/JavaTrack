@@ -1,9 +1,8 @@
-package com.company.neophite.view;
+package com.company.lab3.view;
 
-import com.company.neophite.model.Teacher;
+import com.company.lab3.model.Teacher;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class MainView {
 

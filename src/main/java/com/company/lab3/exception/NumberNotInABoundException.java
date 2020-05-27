@@ -1,4 +1,4 @@
-package com.company.neophite.exception;
+package com.company.lab3.exception;
 
 public class NumberNotInABoundException extends RuntimeException {
     public NumberNotInABoundException(String number){

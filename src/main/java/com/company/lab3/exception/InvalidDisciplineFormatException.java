@@ -1,4 +1,4 @@
-package com.company.neophite.exception;
+package com.company.lab3.exception;
 
 public class InvalidDisciplineFormatException extends RuntimeException{
     public InvalidDisciplineFormatException(String discipline){

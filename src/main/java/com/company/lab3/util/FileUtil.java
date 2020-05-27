@@ -1,6 +1,6 @@
-package com.company.neophite.util;
+package com.company.lab3.util;
 
-import com.company.neophite.model.Teacher;
+import com.company.lab3.model.Teacher;
 
 import java.io.*;
 

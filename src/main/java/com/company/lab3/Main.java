@@ -1,6 +1,6 @@
-package com.company.neophite;
+package com.company.lab3;
 
-import com.company.neophite.controller.TeacherController;
+import com.company.lab3.controller.TeacherController;
 
 import java.io.IOException;
 

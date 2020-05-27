@@ -1,22 +1,19 @@
 package com.company.lab5.controller;
 
-
 import com.company.lab5.exception.InvalidDisciplineFormatException;
 import com.company.lab5.exception.InvalidFormatDepartmentException;
 import com.company.lab5.exception.NumberNotInABoundException;
 import com.company.lab5.model.Teacher;
 import com.company.lab5.service.TeacherService;
+import com.company.lab5.handlerresource.ResourceBundleWords;
 import com.company.lab5.util.TeacherGenerator;
 import com.company.lab5.validator.Validator;
 import com.company.lab5.view.MainView;
 import com.company.lab5.view.RetrievView;
 import org.apache.log4j.Logger;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-
-import static com.company.neophite.view.MainView.printMenu;
+import java.util.Locale;
 
 public class TeacherController {
 
@@ -34,16 +31,19 @@ public class TeacherController {
 
     public void run() {
         logger.info("The app have started ...");
+        mainView.print(ResourceBundleWords.LANG_MENU);
+        String langChoice = retrievView.getArgument();
+        languageChoice(langChoice);
         readDataFromFile();
         if (this.teacherService == null) return;
         while (true) {
-            printMenu();
+            mainView.print(ResourceBundleWords.MAIN_MENU);
             String data = retrievView.getNumberOfFuction();
             try {
                 Validator.validateChoosingNumberOfMenu(data);
             } catch (NumberFormatException | NumberNotInABoundException e) {
                 logger.error("User enter error number format : " + data);
-                mainView.printErr("Please write numeric value from 1 to 6");
+                mainView.printErr(ResourceBundleWords.INVALID_FORMAT_INPUT_NUMBER);
                 continue;
             }
             if (Integer.parseInt(data) == EXIT_CODE) {
@@ -51,13 +51,13 @@ public class TeacherController {
                     teacherService.writeDataToFile();
                 } catch (FileNotFoundException e) {
                     logger.fatal("File for writting is not found");
-                    mainView.printErr("File for writting is not found");
+                    mainView.printErr(ResourceBundleWords.FILE_FOR_WRITING_NOT_FOUND);
                 } catch (IOException e) {
                     logger.fatal("Data for writting in file can not be write");
-                    mainView.printErr("Data for writting in file can not be write");
+                    mainView.printErr(ResourceBundleWords.FILE_WRITING_EXCEPTION);
                 }
-                mainView.print("Data was saved");
-                logger.info("File is saved , exit from programm");
+                mainView.print(ResourceBundleWords.EXIT);
+                logger.info("File is saved , exit from program");
                 return;
             }
             actions(Integer.parseInt(data));
@@ -87,8 +87,11 @@ public class TeacherController {
                 setNewTeachers(TeacherGenerator.generateTeacher(10));
                 logger.info("User set new teachers list");
                 break;
-
-
+            case 7 :
+                mainView.print(ResourceBundleWords.LANG_MENU);
+                String lang = retrievView.getArgument();
+                languageChoice(lang);
+                break;
         }
     }
 
@@ -97,26 +100,26 @@ public class TeacherController {
     }
 
     private void getTeachersByDepartment() {
-        mainView.print("Enter Department : ");
+        mainView.print(ResourceBundleWords.INPUT_DEPARTMENT);
         String department = retrievView.getArgument();
         try {
             Validator.validateInputDepartment(department);
         } catch (InvalidFormatDepartmentException e) {
             logger.error("Bad input format department: " + department);
-            mainView.printErr(e.getMessage());
+            mainView.printErr(ResourceBundleWords.INVALID_DEPARTMENT_FORMAT);
             getTeachersByDepartment();
         }
         mainView.printTeachers(teacherService.findTeachersByDepartment(department));
     }
 
     private void getTeachersByDiscipline() {
-        mainView.print("Enter discipline : ");
+        mainView.print(ResourceBundleWords.DISCIPLINE_INPUT);
         String discipline = retrievView.getArgument();
         try {
             Validator.validateInputDiscipline(discipline);
         } catch (InvalidDisciplineFormatException e) {
             logger.error("Bad input format of discipline : " + discipline);
-            mainView.printErr(e.getMessage());
+            mainView.printErr(ResourceBundleWords.INVALID_DISCIPLINE_FORMAT);
             getTeachersByDiscipline();
         }
         mainView.printTeachers(teacherService.findTeachersByDiscipline(discipline));
@@ -128,7 +131,7 @@ public class TeacherController {
 
     private void setNewTeachers(Teacher[] teachers) {
         this.teacherService.setTeachers(teachers);
-        mainView.print("New array was created");
+        mainView.print(ResourceBundleWords.TEACHER_ARRAY_CREATED);
     }
 
     private void readDataFromFile() {
@@ -136,13 +139,29 @@ public class TeacherController {
             teacherService = new TeacherService();
         } catch (FileNotFoundException e) {
             logger.fatal("File for reading data not found");
-            mainView.printErr("File for reading data not found");
+            mainView.printErr(ResourceBundleWords.FILE_FOR_READING_NOT_FOUND);
         } catch (IOException e) {
             logger.fatal("File for reading data not found");
-            mainView.printErr("File for reading data not found");
+            mainView.printErr(ResourceBundleWords.FILE_FOR_READING_NOT_FOUND);
         } catch (ClassNotFoundException e) {
             logger.fatal("Class not found : " + e.getMessage());
-            mainView.printErr("Class not found : " + e.getMessage());
+            mainView.printErr(ResourceBundleWords.CLASS_NOT_FOUND);
+        }
+    }
+
+    private void languageChoice(String langChoice) {
+        switch (langChoice) {
+            case "2":
+                mainView.setLocaleAndRes(new Locale("ru", "RU"));
+                logger.info("User change interface language on RUS");
+                break;
+            case "3":
+                mainView.setLocaleAndRes(new Locale("uk", "UA"));
+                logger.info("User change interface language on UK");
+                break;
+            default:
+                mainView.setLocaleAndRes(new Locale("en", "GB"));
+                logger.info("User change interface language on ENG");
         }
     }
 

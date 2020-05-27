@@ -14,7 +14,7 @@ public class Validator {
         } catch (NumberFormatException e) {
             throw new NumberFormatException();
         }
-        if (Integer.parseInt(numberOfMenu) > 6 || Integer.parseInt(numberOfMenu) < 1) {
+        if (Integer.parseInt(numberOfMenu) > 7 || Integer.parseInt(numberOfMenu) < 1) {
             throw new NumberNotInABoundException(numberOfMenu);
         }
     }

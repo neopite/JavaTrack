@@ -1,9 +1,9 @@
-package com.company.neophite.validator;
+package com.company.lab3.validator;
 
-import com.company.neophite.exception.InvalidDisciplineFormatException;
-import com.company.neophite.exception.InvalidFormatDepartmentException;
-import com.company.neophite.exception.NumberNotInABoundException;
-import com.company.neophite.util.Util;
+import com.company.lab3.exception.InvalidDisciplineFormatException;
+import com.company.lab3.exception.InvalidFormatDepartmentException;
+import com.company.lab3.exception.NumberNotInABoundException;
+import com.company.lab3.util.Util;
 
 public class Validator {
 

@@ -1,6 +1,4 @@
-package com.company.neophite.util;
-
-import com.company.neophite.model.Teacher;
+package com.company.lab3.util;
 
 public class Util {
     public static boolean isStringHasNumbers(String value) {

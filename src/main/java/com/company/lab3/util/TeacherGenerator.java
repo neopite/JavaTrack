@@ -1,10 +1,9 @@
-package com.company.neophite.util;
+package com.company.lab3.util;
 
-import com.company.neophite.model.Teacher;
+import com.company.lab3.model.Teacher;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class TeacherGenerator {
     private static final List<String> MALE_TEACHERS_NAMES = Arrays.asList("Stanislav", "Bogdan", "Petro", "Ivan");

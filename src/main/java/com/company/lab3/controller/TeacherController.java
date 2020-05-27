@@ -1,20 +1,20 @@
-package com.company.neophite.controller;
+package com.company.lab3.controller;
 
 
-import com.company.neophite.exception.InvalidDisciplineFormatException;
-import com.company.neophite.exception.InvalidFormatDepartmentException;
-import com.company.neophite.exception.NumberNotInABoundException;
-import com.company.neophite.model.Teacher;
-import com.company.neophite.service.TeacherService;
-import com.company.neophite.util.TeacherGenerator;
-import com.company.neophite.validator.Validator;
-import com.company.neophite.view.MainView;
-import com.company.neophite.view.RetrievView;
+import com.company.lab3.exception.InvalidDisciplineFormatException;
+import com.company.lab3.exception.InvalidFormatDepartmentException;
+import com.company.lab3.exception.NumberNotInABoundException;
+import com.company.lab3.model.Teacher;
+import com.company.lab3.service.TeacherService;
+import com.company.lab3.util.TeacherGenerator;
+import com.company.lab3.validator.Validator;
+import com.company.lab3.view.MainView;
+import com.company.lab3.view.RetrievView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import static com.company.neophite.view.MainView.printMenu;
+import static com.company.lab3.view.MainView.printMenu;
 
 public class TeacherController {
 

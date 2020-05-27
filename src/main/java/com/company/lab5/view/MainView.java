@@ -1,40 +1,46 @@
 package com.company.lab5.view;
 
 import com.company.lab5.model.Teacher;
+import com.company.lab5.handlerresource.ResouceLangContainer;
+import com.company.lab5.handlerresource.ResourceBundleWords;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public class MainView {
 
-    public MainView() {
-    }
+    private ResouceLangContainer resouceLangContainer;
 
-    public static void printMenu() {
-        System.out.println('\n');
-        System.out.println(
-                "1 : Print all teachers \n" +
-                        "2 : Find teachers by input department \n" +
-                        "3 : Find teachers by input discipline \n" +
-                        "4 : Find teachers woman with rank of assistant professor \n"
-                        + "5 : Exit \n" +
-                "6 : Create new array of teachers \n ");
+    public MainView() {
+        resouceLangContainer = new ResouceLangContainer();
     }
 
     public void print(String message) {
-        System.out.println(message);
+        System.out.println();
+        String value = resouceLangContainer.getValueByKey(message);
+        System.out.println(value);
     }
+
     public void printErr(String err) {
-        System.err.println(err);
+        String value = resouceLangContainer.getValueByKey(err);
+        System.err.println(value);
     }
 
 
     public void printTeachers(Teacher[] teachers) {
         if (teachers.length == 0) {
-            System.out.println("Teachers not founded");
+            print(ResourceBundleWords.TEACHERS_NOT_FOUNDED);
             return;
         }
         String systemOutParametr = "%-13.13s%-13.13s%-15.15s%-13.13s%-40.40s%-13.13s%-17.17s%n";
-        System.out.printf(systemOutParametr, "Name", "Surname", "ThirdName", "Gender", "Disciplines", "Department", "Rank");
+        System.out.printf(systemOutParametr,
+                resouceLangContainer.getValueByKey(ResourceBundleWords.NAME),
+                resouceLangContainer.getValueByKey(ResourceBundleWords.SURNAME),
+                resouceLangContainer.getValueByKey(ResourceBundleWords.THIRD_NAME),
+                resouceLangContainer.getValueByKey(ResourceBundleWords.GENDER),
+                resouceLangContainer.getValueByKey(ResourceBundleWords.DISCIPLINES),
+                resouceLangContainer.getValueByKey(ResourceBundleWords.DEPARTMENT),
+                resouceLangContainer.getValueByKey(ResourceBundleWords.RANK));
         System.out.printf(systemOutParametr, "____", "_______", "_________", "_______", "____________", "____________", "____");
         for (int itter = 0; itter < teachers.length; itter++) {
             System.out.printf(systemOutParametr,
@@ -48,4 +54,15 @@ public class MainView {
         }
     }
 
+    public ResouceLangContainer getResouceLangContainer() {
+        return resouceLangContainer;
+    }
+
+    public void setLocaleAndRes(Locale localeAndRes) {
+        this.resouceLangContainer.changeLocale(localeAndRes);
+    }
+
+    public void setResouceLangContainer(ResouceLangContainer resouceLangContainer) {
+        this.resouceLangContainer = resouceLangContainer;
+    }
 }

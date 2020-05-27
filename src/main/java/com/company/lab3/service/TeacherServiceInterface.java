@@ -1,6 +1,6 @@
-package com.company.neophite.service;
+package com.company.lab3.service;
 
-import com.company.neophite.model.Teacher;
+import com.company.lab3.model.Teacher;
 
 public interface TeacherServiceInterface {
     Teacher[] findTeachersByDepartment(String department);

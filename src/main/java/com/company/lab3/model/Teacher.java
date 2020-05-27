@@ -1,4 +1,4 @@
-package com.company.neophite.model;
+package com.company.lab3.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
