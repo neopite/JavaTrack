@@ -50,7 +50,7 @@ public class TeacherController {
                 try {
                     teacherService.writeDataToFile();
                 } catch (FileNotFoundException e) {
-                    logger.fatal("File for writting is not found");
+                    logger.fatal("File for writting is not found : "+ TeacherService.getPathFile());
                     mainView.printErr(ResourceBundleWords.FILE_FOR_WRITING_NOT_FOUND);
                 } catch (IOException e) {
                     logger.fatal("Data for writting in file can not be write");
@@ -138,10 +138,10 @@ public class TeacherController {
         try {
             teacherService = new TeacherService();
         } catch (FileNotFoundException e) {
-            logger.fatal("File for reading data not found");
+            logger.fatal("File for reading data not found : "+TeacherService.getPathFile());
             mainView.printErr(ResourceBundleWords.FILE_FOR_READING_NOT_FOUND);
         } catch (IOException e) {
-            logger.fatal("File for reading data not found");
+            logger.fatal("File for reading data not found : " + TeacherService.getPathFile());
             mainView.printErr(ResourceBundleWords.FILE_FOR_READING_NOT_FOUND);
         } catch (ClassNotFoundException e) {
             logger.fatal("Class not found : " + e.getMessage());
