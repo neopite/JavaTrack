@@ -1,16 +1,15 @@
-package com.company.lab5.service;
+package com.company.lab5.model.service;
 
 import com.company.lab5.model.Teacher;
 import com.company.lab5.util.FileUtil;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class TeacherService implements TeacherServiceInterface {
 
     private Teacher[] teachers;
-
     private static final String PATH_FILE = "savedData.txt";
+    private Teacher[] lastQueryResult ;
 
     public TeacherService() throws IOException, ClassNotFoundException {
         this.teachers = FileUtil.readTeachers(PATH_FILE);
@@ -21,7 +20,7 @@ public class TeacherService implements TeacherServiceInterface {
     }
 
     @Override
-    public Teacher[] findTeachersByDepartment(String department) {
+        public Teacher[] findTeachersByDepartment(String department) {
         Teacher[] teachersByDepartment = new Teacher[teachers.length];
         int counter = 0;
         for (int itter = 0; itter < teachersByDepartment.length; itter++) {
@@ -88,8 +87,15 @@ public class TeacherService implements TeacherServiceInterface {
     public void setTeachers(Teacher[] teachers) {
         this.teachers = teachers;
     }
-
     public static String getPathFile() {
         return PATH_FILE;
+    }
+
+    public Teacher[] getLastQueryResult() {
+        return lastQueryResult;
+    }
+
+    public void setLastQueryResult(Teacher[] lastQueryResult) {
+        this.lastQueryResult = lastQueryResult;
     }
 }

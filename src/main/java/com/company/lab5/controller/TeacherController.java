@@ -4,13 +4,16 @@ import com.company.lab5.exception.InvalidDisciplineFormatException;
 import com.company.lab5.exception.InvalidFormatDepartmentException;
 import com.company.lab5.exception.NumberNotInABoundException;
 import com.company.lab5.model.Teacher;
-import com.company.lab5.service.TeacherService;
-import com.company.lab5.handlerresource.ResourceBundleWords;
+import com.company.lab5.model.service.TeacherService;
+import com.company.lab5.util.FileUtil;
+import com.company.lab5.view.handlerresource.ResourceBundleWords;
 import com.company.lab5.util.TeacherGenerator;
-import com.company.lab5.validator.Validator;
+import com.company.lab5.controller.validator.Validator;
 import com.company.lab5.view.MainView;
 import com.company.lab5.view.RetrievView;
 import org.apache.log4j.Logger;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
@@ -33,8 +36,8 @@ public class TeacherController {
         logger.info("The app have started ...");
         mainView.print(ResourceBundleWords.LANG_MENU);
         String langChoice = retrievView.getArgument();
-        languageChoice(langChoice);
-        readDataFromFile();
+        chooseLang(langChoice);
+        initTeacherService();
         if (this.teacherService == null) return;
         while (true) {
             mainView.print(ResourceBundleWords.MAIN_MENU);
@@ -90,8 +93,10 @@ public class TeacherController {
             case 7 :
                 mainView.print(ResourceBundleWords.LANG_MENU);
                 String lang = retrievView.getArgument();
-                languageChoice(lang);
+                chooseLang(lang);
                 break;
+            case 8 :
+                saveLastQueryToFile();
         }
     }
 
@@ -102,31 +107,41 @@ public class TeacherController {
     private void getTeachersByDepartment() {
         mainView.print(ResourceBundleWords.INPUT_DEPARTMENT);
         String department = retrievView.getArgument();
+        logger.info("User enter department name : " + department);
         try {
             Validator.validateInputDepartment(department);
         } catch (InvalidFormatDepartmentException e) {
             logger.error("Bad input format department: " + department);
             mainView.printErr(ResourceBundleWords.INVALID_DEPARTMENT_FORMAT);
             getTeachersByDepartment();
+            return;
         }
-        mainView.printTeachers(teacherService.findTeachersByDepartment(department));
+        Teacher [] executionRes = teacherService.findTeachersByDepartment(department);
+        this.teacherService.setLastQueryResult(executionRes);
+        mainView.printTeachers(executionRes);
     }
 
     private void getTeachersByDiscipline() {
         mainView.print(ResourceBundleWords.DISCIPLINE_INPUT);
         String discipline = retrievView.getArgument();
+        logger.info("User enter a discipline name : " + discipline);
         try {
             Validator.validateInputDiscipline(discipline);
         } catch (InvalidDisciplineFormatException e) {
             logger.error("Bad input format of discipline : " + discipline);
             mainView.printErr(ResourceBundleWords.INVALID_DISCIPLINE_FORMAT);
             getTeachersByDiscipline();
+            return;
         }
-        mainView.printTeachers(teacherService.findTeachersByDiscipline(discipline));
+        Teacher [] executionResult =teacherService.findTeachersByDiscipline(discipline);
+        this.teacherService.setLastQueryResult(executionResult);
+        mainView.printTeachers(executionResult);
     }
 
     private void getWomanAndAssistantProffesor() {
-        mainView.printTeachers(teacherService.findTeachersWomanAndAssistanceProfessor());
+        Teacher [] executionResult =teacherService.findTeachersWomanAndAssistanceProfessor();
+        this.teacherService.setLastQueryResult(executionResult);
+        mainView.printTeachers(executionResult);
     }
 
     private void setNewTeachers(Teacher[] teachers) {
@@ -134,23 +149,23 @@ public class TeacherController {
         mainView.print(ResourceBundleWords.TEACHER_ARRAY_CREATED);
     }
 
-    private void readDataFromFile() {
+    private void initTeacherService() {
         try {
             teacherService = new TeacherService();
         } catch (FileNotFoundException e) {
             logger.fatal("File for reading data not found : "+TeacherService.getPathFile());
             mainView.printErr(ResourceBundleWords.FILE_FOR_READING_NOT_FOUND);
         } catch (IOException e) {
-            logger.fatal("File for reading data not found : " + TeacherService.getPathFile());
-            mainView.printErr(ResourceBundleWords.FILE_FOR_READING_NOT_FOUND);
+            logger.fatal("Data from file can not be read : " + TeacherService.getPathFile());
+            mainView.printErr(ResourceBundleWords.DATA_CANNOT_BE_READ+ "Файл : " + TeacherService.getPathFile());
         } catch (ClassNotFoundException e) {
             logger.fatal("Class not found : " + e.getMessage());
             mainView.printErr(ResourceBundleWords.CLASS_NOT_FOUND);
         }
     }
 
-    private void languageChoice(String langChoice) {
-        switch (langChoice) {
+    private void chooseLang(String lang) {
+        switch (lang) {
             case "2":
                 mainView.setLocaleAndRes(new Locale("ru", "RU"));
                 logger.info("User change interface language on RUS");
@@ -162,6 +177,26 @@ public class TeacherController {
             default:
                 mainView.setLocaleAndRes(new Locale("en", "GB"));
                 logger.info("User change interface language on ENG");
+        }
+    }
+
+    private void saveLastQueryToFile(){
+        mainView.print(ResourceBundleWords.WHERE_TO_SAVE);
+        String path = retrievView.getArgument();
+        logger.info("User enter a file path : " + path);
+        File file = new File(path);
+        if(file.exists()){
+            try {
+                FileUtil.writeTeachers(this.teacherService.getLastQueryResult(),file.getPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            logger.info("Last query result was completely saved in file with path : " + path);
+           mainView.print(ResourceBundleWords.COMPLETE_SAVING_FILE);
+        }else {
+            mainView.printErr(ResourceBundleWords.FILE_FOR_SAVING_NOT_FOUND);
+            logger.error("Not right file path for saving results of last query . Path : "+ path);
+            saveLastQueryToFile();
         }
     }
 

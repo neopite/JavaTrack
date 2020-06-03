@@ -1,8 +1,8 @@
 package com.company.lab5.view;
 
 import com.company.lab5.model.Teacher;
-import com.company.lab5.handlerresource.ResouceLangContainer;
-import com.company.lab5.handlerresource.ResourceBundleWords;
+import com.company.lab5.view.handlerresource.ResouceLangContainer;
+import com.company.lab5.view.handlerresource.ResourceBundleWords;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -62,7 +62,5 @@ public class MainView {
         this.resouceLangContainer.changeLocale(localeAndRes);
     }
 
-    public void setResouceLangContainer(ResouceLangContainer resouceLangContainer) {
-        this.resouceLangContainer = resouceLangContainer;
-    }
+
 }

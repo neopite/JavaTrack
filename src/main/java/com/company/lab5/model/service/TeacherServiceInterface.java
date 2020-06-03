@@ -1,4 +1,4 @@
-package com.company.lab5.service;
+package com.company.lab5.model.service;
 
 import com.company.lab5.model.Teacher;
 

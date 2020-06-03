@@ -1,4 +1,4 @@
-package com.company.lab5.handlerresource;
+package com.company.lab5.view.handlerresource;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
