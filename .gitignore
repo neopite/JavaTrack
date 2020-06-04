@@ -1,7 +1,10 @@
 pom.xml
 saveData.tx
-savedData.txt
+src/resources/savedData.txt
 assigment1.iml
 target
 out
 .idea
+savedData.txt
+/src/resources/META-INF/
+/src/main/java/META-INF

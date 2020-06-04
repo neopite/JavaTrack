@@ -1,9 +1,8 @@
-package com.company.lab5.util;
+package com.company.lab1.util;
 
-import com.company.lab5.model.Teacher;
+import com.company.lab1.model.Teacher;
 
 import java.io.*;
-import java.util.stream.IntStream;
 
 public class FileUtil {
 

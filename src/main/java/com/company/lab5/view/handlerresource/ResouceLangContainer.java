@@ -10,7 +10,7 @@ public class ResouceLangContainer {
         locale = Locale.getDefault();
         resourceBundle = ResourceBundle.getBundle("text",locale);
     }
-    public void changeLocale(Locale locale){
+    public void changeLocaleAndBundle(Locale locale){
         this.locale=locale;
         resourceBundle = ResourceBundle.getBundle("text",this.locale);
     }

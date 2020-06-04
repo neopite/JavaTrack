@@ -59,7 +59,7 @@ public class MainView {
     }
 
     public void setLocaleAndRes(Locale localeAndRes) {
-        this.resouceLangContainer.changeLocale(localeAndRes);
+        this.resouceLangContainer.changeLocaleAndBundle(localeAndRes);
     }
 
 
